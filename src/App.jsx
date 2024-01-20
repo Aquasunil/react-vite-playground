@@ -3,11 +3,10 @@ import "./App.css";
 function App() {
 
 	return (
-		<>
+		
 		<div>
-			<h1>Wordle</h1>
+			<h1>lets Create Our Own Wordle</h1>
 		</div>
-		</>
 	);
 }
 
