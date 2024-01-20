@@ -1,13 +1,11 @@
 import "./App.css";
 
 function App() {
-
-	return (
-		
-		<div>
-			<h1>lets Create Our Own Wordle</h1>
-		</div>
-	);
+  return (
+    <div data-testid="app-root">
+      Wordle
+    </div>
+  );
 }
 
 export default App;
