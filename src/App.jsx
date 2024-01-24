@@ -1,11 +1,5 @@
-import "./App.css";
-
 function App() {
-  return (
-    <div data-testid="app-root">
-      Wordle
-    </div>
-  );
+  return <div>Wordle</div>;
 }
 
 export default App;
