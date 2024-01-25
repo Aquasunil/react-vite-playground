@@ -1,5 +1,7 @@
+import Wordle from "./components/Wordle";
+
 function App() {
-  return <div>Wordle</div>;
+  return <Wordle />;
 }
 
 export default App;
