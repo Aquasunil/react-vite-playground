@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./wordle.css";
 
 // Wordle component definition
@@ -8,8 +8,36 @@ function Wordle() {
     Array.from({ length: 6 }, () => Array(5).fill(""))
   );
 
-  // Add logic for rendering the grid
+  // 1. Add state for the word guess
+  const [guess, setGuess] = useState("");
 
+  // 2. Add logic for handling key presses
+  const handleKeyPress = (key) => {
+    // Check if key is an alphabet letter and guess is less than 5 letters
+    if (/^[a-zA-Z]$/.test(key) && guess.length < 5) {
+      setGuess((prevGuess) => prevGuess + key.toLowerCase());
+    } else if (key === "Backspace" && guess.length > 0) {
+      // Check if key is Backspace and guess is greater than 0 letters
+      setGuess((prevGuess) => prevGuess.slice(0, -1));
+    } else if (key === "Enter" && guess.length === 5) {
+      // Check if key is Enter and guess is exactly 5 letters
+      checkGuess();
+    }
+    // 4. Call updateGrid to refresh the grid
+    updateGrid();
+  };
+
+  // 3. Add logic for checking the guess
+  const checkGuess = () => {
+    // Implementation goes here
+  };
+
+  // 5. Add logic for updating the grid
+  const updateGrid = () => {
+    // Implementation goes here
+  };
+
+  // Add logic for rendering the grid
   return (
     <div className="wordle-container">
       <h1>Wordle</h1>
@@ -32,7 +60,12 @@ function Wordle() {
         ].map((row, rowIndex) => (
           <div key={rowIndex}>
             {row.map((letter, colIndex) => (
-              <button key={colIndex} className="button">
+              // 6. Attach the handleKeyPress function to the button onClick event
+              <button
+                key={colIndex}
+                className="button"
+                onClick={() => handleKeyPress(letter)}
+              >
                 {letter}
               </button>
             ))}
