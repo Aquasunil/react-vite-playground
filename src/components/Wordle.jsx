@@ -24,6 +24,21 @@ function Wordle() {
           </div>
         ))}
       </div>
+      <div className="letter-buttons">
+        {[
+          ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+          ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+          ["Enter", "Z", "X", "C", "V", "B", "N", "M", "Backspace"],
+        ].map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((letter, colIndex) => (
+              <button key={colIndex} className="button">
+                {letter}
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

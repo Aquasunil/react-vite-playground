@@ -24,3 +24,17 @@
   max-height: 100%; /* Set a maximum height for the content */
   overflow: hidden;
 }
+.letter-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.button {
+  font-size: 18px;
+  margin: 2px;
+}
+.button:hover {
+  cursor: pointer;
+}
