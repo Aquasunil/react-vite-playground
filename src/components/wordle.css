@@ -1,3 +1,5 @@
+/* wordle.css */
+
 .wordle-container {
   text-align: center;
   margin: 20px;
@@ -11,6 +13,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 5px; /* Add gap between grid boxes in a row */
 }
+
 .grid-box {
   width: 40px;
   height: 40px;
@@ -24,6 +27,7 @@
   max-height: 100%; /* Set a maximum height for the content */
   overflow: hidden;
 }
+
 .letter-buttons {
   margin-top: 20px;
   display: flex;
@@ -37,4 +41,13 @@
 }
 .button:hover {
   cursor: pointer;
+}
+.incorrect {
+  background-color: lightgray;
+}
+.misplaced {
+  background-color: orange;
+}
+.correct {
+  background-color: lightgreen;
 }
