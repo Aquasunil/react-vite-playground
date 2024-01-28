@@ -1,43 +1,29 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./wordle.css";
 
-// Wordle component definition
-function Wordle() {
-  // 6 rows x 5 columns grid
+const WordleGame = () => {
   const [grid, setGrid] = useState(
     Array.from({ length: 6 }, () => Array(5).fill(""))
   );
-
-  // 1. Add state for the word guess
   const [guess, setGuess] = useState("");
-
-  // 2. Add state for attempts
   const [attempts, setAttempts] = useState(0);
-
-  // 3. Add state for feedback
   const [feedback, setFeedback] = useState(
     Array.from({ length: 6 }, () => Array(5).fill(""))
   );
+  const [letterFeedback, setLetterFeedback] = useState({});
 
-  // 4. Add logic for handling key presses
   const handleKeyPress = (key) => {
-    // Check if key is an alphabet letter and guess is less than 5 letters
     if (/^[a-zA-Z]$/.test(key) && guess.length < 5) {
       setGuess((prevGuess) => prevGuess + key.toLowerCase());
     } else if (key === "Backspace" && guess.length > 0) {
-      // Check if key is Backspace and guess is greater than 0 letters
       setGuess((prevGuess) => prevGuess.slice(0, -1));
     } else if (key === "Enter" && guess.length === 5) {
-      // Check if key is Enter and guess is exactly 5 letters
       checkGuess();
     }
-    // 5. Call updateGrid to refresh the grid
     updateGrid();
   };
 
-  // 6. Add logic for checking the guess
   const checkGuess = () => {
-    const secretWord = "react";
     const newFeedback = Array(secretWord.length).fill("incorrect");
 
     for (let i = 0; i < secretWord.length; i++) {
@@ -50,6 +36,19 @@ function Wordle() {
       }
     }
 
+    newFeedback.forEach((fb, index) => {
+      const letter = guess[index];
+      setLetterFeedback((prev) => {
+        if (prev[letter] !== "correct") {
+          return {
+            ...prev,
+            [letter]: fb,
+          };
+        }
+        return prev;
+      });
+    });
+
     setFeedback((prevFeedback) => {
       const newFeedbackState = [...prevFeedback];
       newFeedbackState[attempts] = newFeedback;
@@ -58,17 +57,10 @@ function Wordle() {
 
     setAttempts((prevAttempt) => prevAttempt + 1);
 
-    if (newFeedback.every((status) => status === "correct")) {
-      handleEndGame(true);
-    } else if (attempts + 1 === 6) {
-      handleEndGame(false);
-    }
-
-    // Clear the guess state after checking
+    updateGrid();
     setGuess("");
   };
 
-  // 7. Add logic for updating the grid
   const updateGrid = () => {
     setGrid((prevGrid) => {
       const newGrid = [...prevGrid];
@@ -83,14 +75,10 @@ function Wordle() {
     });
   };
 
-  // 8. Add logic for handling game end
-  const handleEndGame = (isWinner) => {
-    // Show modal or perform other actions based on the game result
-    console.log(isWinner ? "Congratulations! You won!" : "Game over!");
-  };
-
-  // 9. Add useEffect to handle key events
   useEffect(() => {
+    if (attempts < 6) {
+      updateGrid();
+    }
     const handleKeyDown = (event) => {
       handleKeyPress(event.key);
     };
@@ -102,7 +90,41 @@ function Wordle() {
     };
   }, [guess, attempts]);
 
-  // Add logic for rendering the grid
+  const resetGame = () => {
+    setGuess("");
+    setAttempts(0);
+    setFeedback(Array.from({ length: 6 }, () => Array(5).fill("")));
+    setLetterFeedback({});
+    setGrid(Array.from({ length: 6 }, () => Array(5).fill("")));
+  };
+
+  const getFeedbackClass = (feedbackValue) => {
+    switch (feedbackValue) {
+      case "correct":
+        return "correct";
+      case "misplaced":
+        return "misplaced";
+      case "incorrect":
+        return "incorrect";
+      default:
+        return "";
+    }
+  };
+
+  const getLetterClass = (letter) => {
+    if (!letterFeedback[letter]) return "";
+    switch (letterFeedback[letter]) {
+      case "correct":
+        return "correct";
+      case "misplaced":
+        return "misplaced";
+      case "incorrect":
+        return "incorrect";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="wordle-container">
       <h1>Wordle</h1>
@@ -110,7 +132,12 @@ function Wordle() {
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="grid-row">
             {row.map((col, colIndex) => (
-              <div key={colIndex} className="grid-box">
+              <div
+                key={colIndex}
+                className={`grid-box ${getFeedbackClass(
+                  feedback[rowIndex]?.[colIndex]
+                )}`}
+              >
                 {col}
               </div>
             ))}
@@ -125,11 +152,12 @@ function Wordle() {
         ].map((row, rowIndex) => (
           <div key={rowIndex}>
             {row.map((letter, colIndex) => (
-              // 10. Attach the handleKeyPress function to the button onClick event
               <button
                 key={colIndex}
-                className="button"
-                onClick={() => handleKeyPress(letter)}
+                onClick={() => {
+                  handleKeyPress(letter);
+                }}
+                className={`button ${getLetterClass(letter.toLowerCase())} `}
               >
                 {letter}
               </button>
@@ -139,7 +167,6 @@ function Wordle() {
       </div>
     </div>
   );
-}
+};
 
-// Export the Wordle component
-export default Wordle;
+export default WordleGame;
