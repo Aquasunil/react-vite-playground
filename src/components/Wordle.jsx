@@ -83,13 +83,7 @@ function Wordle() {
     });
   };
 
-  // 8. Add logic for handling game end
-  const handleEndGame = (isWinner) => {
-    // Show modal or perform other actions based on the game result
-    console.log(isWinner ? "Congratulations! You won!" : "Game over!");
-  };
-
-  // 9. Add useEffect to handle key events
+  // 8. Add useEffect to handle key events
   useEffect(() => {
     const handleKeyDown = (event) => {
       handleKeyPress(event.key);
