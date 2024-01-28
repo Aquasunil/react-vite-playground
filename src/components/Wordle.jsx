@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./wordle.css";
+//declaring a secret word which would be guessed by user
+const secretWord = "react";
 
 // Wordle component definition
 function Wordle() {
@@ -37,7 +39,6 @@ function Wordle() {
 
   // 6. Add logic for checking the guess
   const checkGuess = () => {
-    const secretWord = "react";
     const newFeedback = Array(secretWord.length).fill("incorrect");
 
     for (let i = 0; i < secretWord.length; i++) {
