@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./wordle.css";
 //declaring a secret word which would be guessed by user
-const secretWord = "react
+const secretWord = "react"
   
 function Wordle(){
   const [grid, setGrid] = useState(
