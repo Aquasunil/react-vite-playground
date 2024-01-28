@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./wordle.css";
-
+//declaring a secret word which would be guessed by user
+const secretWord = "react
+  
 const WordleGame = () => {
   const [grid, setGrid] = useState(
     Array.from({ length: 6 }, () => Array(5).fill(""))
