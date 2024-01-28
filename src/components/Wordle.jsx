@@ -3,7 +3,7 @@ import "./wordle.css";
 //declaring a secret word which would be guessed by user
 const secretWord = "react
   
-const WordleGame = () => {
+function Wordle(){
   const [grid, setGrid] = useState(
     Array.from({ length: 6 }, () => Array(5).fill(""))
   );
@@ -171,4 +171,4 @@ const WordleGame = () => {
   );
 };
 
-export default WordleGame;
+export default Wordle;
